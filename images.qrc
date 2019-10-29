@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/folder.png</file>
+        <file>resources/icon.png</file>
+        <file>resources/photosurface.icns</file>
+        <file>resources/photosurface.ico</file>
+        <file>resources/photosurface.rc</file>
+        <file>resources/arrow_left.png</file>
+        <file>resources/arrow_right.png</file>
+    </qresource>
+</RCC>
