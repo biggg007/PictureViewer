@@ -7,16 +7,18 @@ import Qt.labs.folderlistmodel 2.12
 
 
 ApplicationWindow  {
+    id:appW
     visible: true
     width: 1366
     height: 768
-    title: qsTr("Picture Viewer")
+    title: apptitle
 
     property var imagenamefilters: ["*.png", "*.jpg", "*.gif"]
     property int imageindex: 0
     property var selpath
     property var folder
-
+    property var apptitle:qsTr("Picture Viewer")
+    property var picname
 
     BusyIndicator{
         id:busy;
@@ -48,32 +50,26 @@ ApplicationWindow  {
         anchors.fill: parent
         anchors.centerIn: parent.center
         asynchronous: true
-        width: implicitWidth
-        height: implicitHeight
-        z: 3
+
         MouseArea{
                 id:getimg
                 anchors.fill: showImg
                 visible: showImg.source != 0
-                width: showImg.implicitWidth
-                height: showImg.implicitHeight
                 onClicked: {
                     if(Image.Null != showImg.status && mouseX <= showImg.width / 2)
                     {
-                            showImg.source = "file:///"+selpath + IMAGEHANDLE.get_previous_image_path()
-
-
-//                            console.log("Image left area is pressed.", showImg.source)
+                         picname = IMAGEHANDLE.get_previous_image_path()
                     }
                     else if(Image.Null != showImg.status)
                     {
-                            showImg.source = "file:///"+selpath + IMAGEHANDLE.get_next_image_path();
-
-//                            console.log("Image right area is pressed.",showImg.source, "Image.width:", showImg.width, showImg.implicitWidth)
+                         picname = IMAGEHANDLE.get_next_image_path()
                     }
-
+                    showImg.source = "file:///"+selpath + picname
+                    appW.title = apptitle + qsTr(" (") + picname + qsTr(")")
                 }
             }
+
+        z: 3
     }
 
     FileDialog{
@@ -87,6 +83,8 @@ ApplicationWindow  {
             selpath = new String(folder).slice(8)
             IMAGEHANDLE.set_image_file_path(selpath);
             showImg.source = folder + IMAGEHANDLE.get_image_name();
+
+            appW.title = apptitle + qsTr(" (") + IMAGEHANDLE.get_image_name() + qsTr(")")
 //            console.log(selpath, showImg.source)
         }
     }

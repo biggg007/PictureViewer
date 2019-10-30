@@ -37,6 +37,17 @@ QString ImageFileMsg::get_image_name()
     return m_image_infolist.at(m_current_image_index).fileName();
 }
 
+void ImageFileMsg::image_file_list()
+{
+    m_image_infolist.clear();
+
+    QDir dir(m_dir_path,"Images (*.png *.bmp *.jpg *.gif)");
+
+    m_image_infolist = dir.entryInfoList( );
+    m_image_count = m_image_infolist.count();
+    m_current_image_index = 0;
+}
+
 void ImageFileMsg::set_image_file_path(const QString &path)
 {
     if(nullptr != path)
@@ -49,15 +60,4 @@ void ImageFileMsg::set_image_file_path(const QString &path)
     qDebug()<<"Set dir path:"<<m_dir_path;
 
     image_file_list();
-}
-
-void ImageFileMsg::image_file_list()
-{
-    m_image_infolist.clear();
-
-    QDir dir(m_dir_path,"Images (*.png *.bmp *.jpg *.gif)");
-
-    m_image_infolist = dir.entryInfoList( );
-    m_image_count = m_image_infolist.count();
-    m_current_image_index = 0;
 }
